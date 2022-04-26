@@ -42,7 +42,7 @@ def reqshift(data,fshift=100,sample_rate=4096):
     return z
 
 # plotting function
-def plot_func(time, timemax, SNR, pcolor, det,eventname, plottype, tevent,strain_whitenbp, template_match, template_fft, datafreq, d_eff, data_psd, freqs):
+def plot_function(time, timemax, SNR, pcolor, det,eventname, plottype, tevent,strain_whitenbp, template_match, template_fft, datafreq, d_eff, data_psd, freqs, fs):
     
         plt.figure(figsize=(10,8))
         plt.subplot(2,1,1)
