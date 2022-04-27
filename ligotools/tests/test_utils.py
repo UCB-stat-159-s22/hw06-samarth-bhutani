@@ -1,9 +1,10 @@
+import matplotlib
+matplotlib.use('Agg')
 from ligotools import *
 from ligotools import utils as ut
 import json
 import os
 import numpy as np
-import matplotlib
 import matplotlib.mlab as mlab
 from scipy.interpolate import interp1d
 from scipy.io import wavfile
@@ -11,12 +12,10 @@ from scipy.signal import butter, filtfilt
 from scipy import signal
 import h5py
 
+
 #hide warnings
 import warnings
 warnings.filterwarnings("ignore")
-
-matplotlib.use('Agg')
-
 
 data = "data/BBH_events_v3.json"
 sub_data =  json.load(open(data,"r"))
@@ -41,7 +40,6 @@ normalization = np.sqrt((fband[1]-fband[0])/(fs/2))
 deltat_sound = 2.
 indxd = np.where((time >= tevent-deltat_sound) & (time < tevent+deltat_sound))
 fshift = 400.
-psd_window = np.blackman(NFFT)
 datafreq = np.fft.fftfreq(template.size)*fs
 df = np.abs(datafreq[1] - datafreq[0])
 
@@ -72,8 +70,9 @@ def test3():
     assert type(strain_H1_shifted) is np.ndarray
 
 def test4():
-    try:   dwindow = signal.tukey(template.size, alpha=1./8)  
-    except: dwindow = signal.blackman(template.size) 
+
+    psd_window = np.blackman(NFFT)
+    dwindow = signal.blackman(template.size) 
     template_fft = np.fft.fft(template*dwindow) / fs
     
     data = strain_H1.copy()
